@@ -111,8 +111,8 @@ class Romanizer(object):
                 _romanized +=  onset[char]
             elif char in     vowel:
                 _romanized +=  vowel[char]
-            elif char in     final:
-                _romanized +=  final[char]
+            elif char in     coda:
+                _romanized +=  coda[char]
             elif (re.match(hangul, char)):
                 s = Syllable(char)
 
