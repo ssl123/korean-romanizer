@@ -106,7 +106,14 @@ class Romanizer(object):
         hangul = r"[가-힣ㄱ-ㅣ]"
         _romanized = ""
         for char in pronounced:
-            if (re.match(hangul, char)):
+            print(char)
+            if char in onset:
+                _romanized +=  onset[char]
+            elif char in     vowel:
+                _romanized +=  vowel[char]
+            elif char in     final:
+                _romanized +=  final[char]
+            elif (re.match(hangul, char)):
                 s = Syllable(char)
 
                 if not s.medial and not s.final:
@@ -120,8 +127,9 @@ class Romanizer(object):
                     _romanized += char
                 else:
                     # s is a full syllable
-                    _romanized += onset[s.initial] + vowel[s.medial] + coda[s.final]
-
+                    _romanized += onset[s.initial] + vowel[s.medial]
+                    if s.final in coda:
+                        _romanized += coda[s.final]
             else:
                 _romanized += char
 
