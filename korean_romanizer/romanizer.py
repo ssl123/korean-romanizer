@@ -120,8 +120,6 @@ class Romanizer(object):
         hangul = r"[가-힣ㄱ-ㅣ]"
         _romanized = ""
         for char in pronounced:
-            print(char)
-            print(char=='ᄏ')
             if char in hangul_to_roman_map:
                 _romanized +=  hangul_to_roman_map[char]
             elif char in onset:
