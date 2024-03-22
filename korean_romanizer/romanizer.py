@@ -96,7 +96,21 @@ coda = {
     
     None: '',
 }
-    
+
+# 谚文兼容字母到罗马字母的基础映射表（Revised Romanization）
+hangul_to_roman_map = {
+    'ㄱ': 'g', 'ㄲ': 'kk', 'ㄴ': 'n', 'ㄷ': 'd', 'ㄸ': 'tt',
+    'ㄹ': 'r', 'ㅁ': 'm', 'ㅂ': 'b', 'ㅃ': 'pp', 'ㅅ': 's',
+    'ㅆ': 'ss', 'ㅇ': '', 'ㅈ': 'j', 'ㅉ': 'jj', 'ㅊ': 'ch',
+    'ㅋ': 'k', 'ㅌ': 't', 'ㅍ': 'p', 'ㅎ': 'h',
+    # 韵母
+    'ㅏ': 'a', 'ㅐ': 'ae', 'ㅑ': 'ya', 'ㅒ': 'yae', 'ㅓ': 'eo',
+    'ㅔ': 'e', 'ㅕ': 'yeo', 'ㅖ': 'ye', 'ㅗ': 'o', 'ㅘ': 'wa',
+    'ㅙ': 'wae', 'ㅚ': 'oe', 'ㅛ': 'yo', 'ㅜ': 'u', 'ㅝ': 'wo',
+    'ㅞ': 'we', 'ㅟ': 'wi', 'ㅠ': 'yu', 'ㅡ': 'eu', 'ㅢ': 'ui',
+    'ㅣ': 'i',
+    # 特殊考虑：'ㅇ'在词首时无声，在词中或词尾时表示ng声音，此处简化处理
+}
 class Romanizer(object):
     def __init__(self, text):
         self.text = text
@@ -107,11 +121,14 @@ class Romanizer(object):
         _romanized = ""
         for char in pronounced:
             print(char)
-            if char in onset:
+            print(char=='ᄏ')
+            if char in hangul_to_roman_map:
+                _romanized +=  hangul_to_roman_map[char]
+            elif char in onset:
                 _romanized +=  onset[char]
             elif char in     vowel:
                 _romanized +=  vowel[char]
-            elif char in     coda:
+            elif char in    coda:
                 _romanized +=  coda[char]
             elif (re.match(hangul, char)):
                 s = Syllable(char)
